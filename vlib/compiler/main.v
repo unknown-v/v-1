@@ -909,6 +909,16 @@ pub fn new_v(args []string) &V {
 	// println('comptimedefine=$comptime_define')
 	mut out_name := get_arg(joined_args, 'o', 'a.out')
 	mut dir := args.last()
+
+	$if windows {
+		if (out_name.contains('/')){
+			out_name=out_name.replace('/',os.path_separator)
+		}
+		if (dir.contains('/')){
+			dir=dir.replace('/',os.path_separator)
+		}
+	}
+
 	if 'run' in args {
 		dir = get_param_after(joined_args, 'run', '')
 	}
